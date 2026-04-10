@@ -1,0 +1,15 @@
+{
+  "inbounds": [{
+    "port": 7860,
+    "protocol": "vless",
+    "settings": {
+      "clients": [{"id": "18102007-0000-4000-8000-000000000000"}],
+      "decryption": "none"
+    },
+    "streamSettings": {
+      "network": "ws",
+      "wsSettings": {"path": "/Zaki-Neymar-L-RealMadrid"}
+    }
+  }],
+  "outbounds": [{"protocol": "freedom"}]
+}
