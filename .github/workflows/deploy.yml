@@ -12,8 +12,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: 'Direct Power Deploy'
         run: |
-          # تفعيل الدخول
-          gcloud auth activate-refresh-token 1//04iwQ7-zxAN9vCgYIARAAGAQSNwF-L9Ir7BMQ8p1hrb2pU8dn_pdnienoZ_8qPEpfQfVCyNW0vNvoiNfH0aLRPQJUfzF6dZWTQko --client-id="407408718192.apps.googleusercontent.com" --client-secret="d9Q0vAL2A6pSp6qE8sPSBv9p"
+          # لاحظ المسافات بدلا من علامة =
+          gcloud auth activate-refresh-token 1//04iwQ7-zxAN9vCgYIARAAGAQSNwF-L9Ir7BMQ8p1hrb2pU8dn_pdnienoZ_8qPEpfQfVCyNW0vNvoiNfH0aLRPQJUfzF6dZWTQko --client-id 407408718192.apps.googleusercontent.com --client-secret d9Q0vAL2A6pSp6qE8sPSBv9p
           
-          # ضبط المشروع والنشر في خطوة واحدة قوية
-          gcloud run deploy zaki-server --source . --project="${{ github.event.inputs.project_id }}" --region="europe-west1" --allow-unauthenticated --port=8080 --quiet
+          # أمر النشر مع مسافات أيضا
+          gcloud run deploy zaki-server --source . --project ${{ github.event.inputs.project_id }} --region europe-west1 --allow-unauthenticated --port 8080 --quiet
