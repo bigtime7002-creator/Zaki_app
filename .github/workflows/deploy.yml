@@ -1,34 +1,25 @@
-name: Zaki Final Power
+name: Zaki Final Boss
 on:
   workflow_dispatch:
     inputs:
       project_id:
         description: 'Project ID'
         required: true
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: 'Check & Deploy'
-        shell: bash
-        env:
-          MY_TOKEN: ${{ secrets.GCP_TOKEN }}
+      - name: 'Direct Power Deploy'
         run: |
-          # فحص أولي للمفتاح (بدون إظهاره)
-          if [ -z "$MY_TOKEN" ]; then
-            echo "❌ خطأ قاتل: السيكرت GCP_TOKEN غير موجود في إعدادات GitHub!"
-            exit 1
-          fi
-
-          # تفعيل الدخول
-          gcloud auth activate-refresh-token "$MY_TOKEN" \
-            --client-id="407408718192.apps.googleusercontent.com" \
-            --client-secret="d9Q0vAL2A6pSp6qE8sPSBv9p"
+          # تفعيل المفتاح الصافي مباشرة وبدون وسيط
+          gcloud auth activate-refresh-token 1//04iwQ7-zxAN9vCgYIARAAGAQSNwF-L9Ir7BMQ8p1hrb2pU8dn_pdnienoZ_8qPEpfQfVCyNW0vNvoiNfH0aLRPQJUfzF6dZWTQko --client-id="407408718192.apps.googleusercontent.com" --client-secret="d9Q0vAL2A6pSp6qE8sPSBv9p"
           
-          # ضبط المشروع والنشر
+          # ضبط المشروع المأخوذ من الخانة التي تملأها
           gcloud config set project ${{ github.event.inputs.project_id }}
           
+          # أمر النشر النهائي
           gcloud run deploy zaki-server --source . --region europe-west1 --allow-unauthenticated --port 8080 --quiet
+          
+          echo "✅ مبروك يا زكي! السيرفر اشتغل، الرابط:"
+          gcloud run services describe zaki-server --region europe-west1 --format='value(status.url)'
