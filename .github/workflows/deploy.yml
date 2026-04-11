@@ -1,34 +1,32 @@
-name: Zaki Final Fix
+name: Zaki Final Power
 on:
   workflow_dispatch:
     inputs:
       project_id:
         description: 'Project ID'
         required: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: 'Create Auth File'
+      - name: 'Authenticate to Google Cloud'
         run: |
-          # سنصنع ملف اعتماد رسمي لجوجل
-          echo '{
-            "client_id": "407408718192.apps.googleusercontent.com",
-            "client_secret": "d9Q0vAL2A6pSp6qE8sPSBv9p",
-            "refresh_token": "${{ secrets.GCP_TOKEN }}",
-            "type": "authorized_user"
-          }' > gcp_key.json
-
-      - name: 'Authenticate and Deploy'
-        run: |
-          # تسجيل الدخول عبر الملف
+          # تفعيل المفتاح السحري فوراً
           gcloud auth activate-refresh-token ${{ secrets.GCP_TOKEN }} --client-id="407408718192.apps.googleusercontent.com" --client-secret="d9Q0vAL2A6pSp6qE8sPSBv9p"
           
-          # ضبط المشروع والنشر
+          # ضبط المشروع
           gcloud config set project ${{ github.event.inputs.project_id }}
-          gcloud run deploy zaki-server --source . --region europe-west1 --allow-unauthenticated --port 8080 --quiet
           
-          echo "✅ تم النشر بنجاح! الرابط هو:"
+          # أمر النشر القوي والمباشر
+          gcloud run deploy zaki-server \
+            --source . \
+            --region europe-west1 \
+            --allow-unauthenticated \
+            --port 8080 --quiet
+
+      - name: 'Show My URL'
+        run: |
           gcloud run services describe zaki-server --region europe-west1 --format='value(status.url)'
