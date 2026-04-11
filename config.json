@@ -1,14 +1,14 @@
 {
   "inbounds": [{
-    "port": 7860,
+    "port": 8080,
     "protocol": "vless",
     "settings": {
-      "clients": [{"id": "18102007-0000-4000-8000-000000000000"}],
+      "clients": [{"id": "88888888-4444-4444-4444-121212121212"}],
       "decryption": "none"
     },
     "streamSettings": {
       "network": "ws",
-      "wsSettings": {"path": "/Zaki-Neymar-L-RealMadrid"}
+      "wsSettings": {"path": "/zakaria-video"}
     }
   }],
   "outbounds": [{"protocol": "freedom"}]
