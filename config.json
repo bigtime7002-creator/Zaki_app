@@ -1,11 +1,11 @@
 {
     "inbounds": [{
         "port": 8080,
-        "protocol": "vmess",
+        "protocol": "trojan",
         "settings": {
             "clients": [{
-                "id": "20071018-1810-4000-8000-000000000000",
-                "alterId": 0
+                "password": "20071018-zaki-rm",
+                "email": "zaki@neymar.com"
             }]
         },
         "streamSettings": {
