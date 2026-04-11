@@ -1,29 +1,26 @@
-name: Deploy to Cloud Run
+name: Smart Deploy
 on:
   workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'انسخ Project ID من المختبر وضعه هنا'
+        required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Auth Google Cloud
-        uses: 'google-github-actions/auth@v1'
+      - uses: actions/checkout@v4
+      
+      - name: Auth
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Build and Push
-        run: |
-          gcloud auth configure-docker --quiet
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/zakaria-app .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/zakaria-app
-
-      - name: Deploy
+      - name: Deploy to Cloud Run
         run: |
           gcloud run deploy zakaria-server \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/zakaria-app \
+            --image gcr.io/cloudrun/hello \
             --region europe-west1 \
-            --platform managed \
+            --project ${{ github.event.inputs.project_id }} \
             --allow-unauthenticated
